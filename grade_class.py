@@ -1,37 +1,70 @@
+import typing as t
+
+from projekat.grade_class_class import GradeClass
 from projekat.student_class import Student
+from projekat.subjects_class import Subject
 
 
-class GradeClass:
-    def __init__(self, grade: str, grade_class_num: str):
-        self.grade = grade
-        self.grade_class_num = grade_class_num
-        self.class_elder = None
-        self.students = []
+class Grade:
+    def __init__(self, grade_num: str, subjects: t.List[Subject], students: t.List[Student]):
+        self.grade_num = grade_num
+        self.students = students
+        self.subjects = subjects
+        self.grade_classes = []
 
-    def show_grade_class_status(self):
+    def add_grade_class(self, grade_class: GradeClass):
         """
-        It prints the name and surname of each student in the class, along with the subjects they are taking
+        This function adds a grade class to the list of grade classes.
+
+        :param grade_class: The grade class to add to the list of grade classes
+        :type grade_class: GradeClass
+        """
+        self.grade_classes.append(grade_class)
+
+    def extract_grade_classes(self):
+        """
+        It takes a list of grade classes and returns a list of the names of those grade classes
+        :return: A list of the grade_class_name attribute of each grade_class object in the grade_classes list.
+        """
+        lst = []
+        for grd_class in self.grade_classes:
+            lst.append(grd_class.grade_class_name)
+        return lst
+
+    def assign_subjects_to_students(self):
+        """
+        For each student in the school, add a dictionary entry for each subject in the school, with the key being the
+        subject name and the value being an empty list.
         """
         for student in self.students:
-            print(f"{student.name} {student.surname}: {student.subjects}")
+            for subject in self.subjects:
+                student.subjects.update({subject.name: []})
 
-    def show_elder(self):
+    def assign_subjects_to_one_student(self, student: Student):
         """
-        It returns the class_elder of the class.
-        :return: The class_elder attribute of the class.
-        """
-        return f"{self.class_elder.name} {self.class_elder.surname}"
+        It takes a student and assigns them all the subjects in the school
 
-    def is_teacher_elder_in_grade_class(self, teacher_id: str):
+        :param student: Student - this is the student that we want to assign subjects to
+        :type student: Student
         """
-        It checks if the teacher is the class elder.
+        for subject in self.subjects:
+            student.subjects.update({subject: []})
 
-        :param teacher_id: The teacher's ID
-        :type teacher_id: str
-        :return: True or False
+    def add_subject(self, subject: Subject):
         """
-        if self.class_elder.id == teacher_id:
-            return True
+        Add a subject to the list of subjects.
+
+        :param subject: Subject - The subject to add to the list of subjects
+        :type subject: Subject
+        """
+        self.subjects.append(subject)
+
+    def extract_subjects(self):
+        """
+        It returns the list of subjects for a given student
+        :return: The subjects are being returned.
+        """
+        return self.subjects
 
     def add_student(self, student: Student):
         """
@@ -51,18 +84,6 @@ class GradeClass:
         """
         self.students.remove(student)
 
-    def transfer_student(self, student: Student, grade_class: "GradeClass"):
-        """
-        > This function removes a student from a grade class and adds them to another grade class.
-
-        :param student: Student - The student to be transferred
-        :type student: Student
-        :param grade_class: The grade class that the student is being transferred to
-        :type grade_class: "GradeClass"
-        """
-        self.remove_student(student=student)
-        grade_class.add_student(student=student)
-
     def get_best_student(self):
         """
         It loops through all the students in the class, and returns the student with the highest final grade
@@ -76,7 +97,7 @@ class GradeClass:
 
     def get_average_grade_for_subject(self, subject: str):
         """
-        It returns the average grade for a given subject
+        It takes a subject as a parameter, and returns the average grade for that subject
 
         :param subject: str
         :type subject: str
@@ -93,9 +114,4 @@ class GradeClass:
         except ZeroDivisionError:
             pass
 
-    def extract_students(self):
-        """
-        It returns the list of students in the class
-        :return: The students list is being returned.
-        """
-        return self.students
+
