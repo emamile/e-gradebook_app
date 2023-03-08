@@ -1,63 +1,63 @@
-class Exeption(Exception):
+class Exception(Exception):
     def __init__(self, message):
         super().__init__(message)
 
 
-class StudentAlreadyInSchoolExeption(Exeption):
+class StudentAlreadyInSchoolException(Exception):
     def __init__(self):
         super().__init__("We already have that student in school.")
 
 
-class StudentNotInSchoolExeption(Exeption):
+class StudentNotInSchoolException(Exception):
     def __init__(self):
         super().__init__("We don't have that student at our school.")
 
 
-class TeacherAlreadyInSchoolExeption(Exeption):
+class TeacherAlreadyInSchoolException(Exception):
     def __init__(self):
         super().__init__("We already have that teacher in school.")
 
 
-class TeacherNotInSchoolExeption(Exeption):
+class TeacherNotInSchoolException(Exception):
     def __init__(self):
         super().__init__("We don't have that teacher at our school.")
 
 
-class OptionExeption(Exception):
+class OptionException(Exception):
     def __init__(self):
         super().__init__("We don't have that option.")
 
 
-class SchoolNotInSystemExeption(Exception):
+class SchoolNotInSystemException(Exception):
     def __init__(self):
         super().__init__("We don't have that school in our database.")
 
 
-class TeacherIsNotElderExeption(Exception):
+class TeacherIsNotElderException(Exception):
     def __init__(self):
         super().__init__("Teacher is not grade class elder.")
 
 
-class IsNotTeachersSubjectExeption(Exception):
+class IsNotTeachersSubjectException(Exception):
     def __init__(self):
         super().__init__("This is not your subject, you can't grade it.")
 
 
-class GradeOutOfRangeExeption(Exception):
+class GradeOutOfRangeException(Exception):
     def __init__(self):
         super().__init__("Grade must be in range 1-5.")
 
 
-class NoSuchSubjectExeption(Exception):
+class NoSuchSubjectException(Exception):
     def __init__(self):
         super().__init__("There's no such subjcet.")
 
 
-class TransferStudentExeption(Exception):
+class TransferStudentException(Exception):
     def __init__(self):
         super().__init__("Student can't be transfered to the same school.")
 
 
-class TransferStudentToGradeClassExeption(Exception):
+class TransferStudentToGradeClassException(Exception):
     def __init__(self):
         super().__init__("Student can't be transfered to the same grade class.")

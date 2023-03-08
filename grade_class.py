@@ -1,4 +1,4 @@
-from projekat.student_class import Student
+from student import Student
 
 
 class GradeClass:

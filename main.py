@@ -6,9 +6,9 @@ When program starts, students are not graded for any subject they attend, teache
 Options to be added: jmbg validation, usage of serialization and deserialization (nisam stigla ali bih volela da dodam ako imam mogucnosti)"""
 import os
 import random
-from projekat.exeptions_class import *
+from exeptions import *
 from data_load import *
-from projekat.txt import *
+from txt import *
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
                 school_id = input("Enter school id: ")
                 try:
                     if school_id not in schools_ids:
-                        raise SchoolNotInSystemExeption
+                        raise SchoolNotInSystemException
                     else:
                         for school in schools:
                             if school_id == school.get_school_id():
@@ -46,7 +46,7 @@ def main():
                                             subject = input("Insert teacher's subject? (elementary, serbian, english, math, art, music, history, biology, geography, chemistry, physics, physical, technology, computer science): ")
                                             try:
                                                 if teacher.get_id() in (school.get_teachers_id() + school.get_elementary_teachers_id()):
-                                                    raise TeacherAlreadyInSchoolExeption
+                                                    raise TeacherAlreadyInSchoolException
                                                 else:
                                                     try:
                                                         if subject == "elementary":
@@ -54,82 +54,82 @@ def main():
                                                                 teacher.add_subject(subject=sub)
                                                         else:
                                                             if subject not in higher_grade_subjects_names:
-                                                                raise OptionExeption
+                                                                raise OptionException
                                                             else:
                                                                 for subj in higher_grade_subjects:
                                                                     if subject == subj.name:
                                                                         teacher.add_subject(subject=subj)
                                                         school.hire_teacher(teacher=teacher)
-                                                    except OptionExeption as e:
+                                                    except OptionException as e:
                                                         print(e)
-                                            except TeacherAlreadyInSchoolExeption as taise:
+                                            except TeacherAlreadyInSchoolException as taise:
                                                 print(taise)
                                         elif option_1 == "c":
                                             teacher_id = input("Enter teachers id: ")
                                             try:
                                                 if teacher_id not in (school.get_teachers_id() + school.get_elementary_teachers_id()):
-                                                    raise TeacherNotInSchoolExeption
+                                                    raise TeacherNotInSchoolException
                                                 else:
                                                     for teacher in school.get_teachers():
                                                         if teacher_id == teacher.get_id():
                                                             school.fire_teacher(teacher=teacher)
-                                            except TeacherNotInSchoolExeption as tnise:
+                                            except TeacherNotInSchoolException as tnise:
                                                 print(tnise)
                                         elif option_1 == "d":
                                             student = Student(name=input("Insert name: "), surname=input("Insert surname: "), jmbg=input("Insert jmbg: "), date_of_birth=input("Insert date of birth: "), country_of_birth=input("Insert country of birth: "), city_of_birth=input("Insert city of birth: "), grade="", grade_class="", id=school_ck.get_id_for_new_student())
                                             try:
                                                 if student.id in school.get_students_id():
-                                                    raise StudentAlreadyInSchoolExeption
+                                                    raise StudentAlreadyInSchoolException
                                                 else:
                                                     school.add_student_to_school(student=student)
                                                     wanted_grade = input("Enter grade you would like to enroll student in (I-VIII): ")
                                                     try:
                                                         if wanted_grade not in grade_names:
-                                                            raise OptionExeption
+                                                            raise OptionException
                                                         else:
                                                             for grade in school.grades:
                                                                 if wanted_grade == grade.grade_num:
                                                                     grade.add_student(student=student)
                                                                     grade_class = random.choice(grade.grade_classes)
                                                                     grade_class.add_student(student=student)
-                                                    except OptionExeption as e:
+                                                    except OptionException as e:
                                                         print(e)
-                                            except StudentAlreadyInSchoolExeption as saise:
+                                            except StudentAlreadyInSchoolException as saise:
                                                 print(saise)
                                         elif option_1 == "e":
                                             student_id = input("Enter students id: ")
                                             try:
                                                 if student_id not in school.get_students_id():
-                                                    raise StudentNotInSchoolExeption
+                                                    raise StudentNotInSchoolException
                                                 else:
                                                     for student in school.get_students():
                                                         if student_id == student.get_id():
                                                             school.expel_student_from_school(student=student)
-                                            except StudentNotInSchoolExeption as snise:
+                                            except StudentNotInSchoolException as snise:
                                                 print(snise)
                                         elif option_1 == "f":
                                             student_id = input("Enter students id: ")
                                             new_school_id = input("To which school you want to transfer student? (enter schools id): ")
                                             try:
                                                 if student_id not in school.get_students_id():
-                                                    raise StudentNotInSchoolExeption
+                                                    raise StudentNotInSchoolException
                                                 else:
                                                     try:
                                                         if new_school_id not in schools_ids:
-                                                            raise SchoolNotInSystemExeption
+                                                            raise SchoolNotInSystemException
                                                         elif new_school_id == school.get_school_id():
-                                                            raise TransferStudentExeption
+                                                            raise TransferStudentException
                                                         else:
                                                             for student in school.get_students():
                                                                 if student_id == student.id:
                                                                     for transfer_school in schools:
                                                                         if new_school_id == transfer_school.get_school_id():
                                                                             school.transfer_student(student=student, school=transfer_school)
-                                                    except SchoolNotInSystemExeption as snise:
+                                                    except SchoolNotInSystemException as snise:
                                                         print(snise)
-                                                    except TransferStudentExeption as tse:
+                                                    except TransferStudentException as tse:
                                                         print(tse)
-                                            except StudentNotInSchoolExeption as snise:
+                                            except StudentNotInSchoolException as snise:
                                                 print(snise)
                                         elif option_1 == "g":
                                             for teacher in (school.get_teachers() + school.get_elementary_teachers()):
@@ -147,7 +147,7 @@ def main():
                                             stud_id = input("Enter student id: ")
                                             try:
                                                 if stud_id not in school.get_students_id():
-                                                    raise StudentNotInSchoolExeption
+                                                    raise StudentNotInSchoolException
                                                 else:
                                                     for student in school.get_students():
                                                         if stud_id == student.id:
@@ -156,41 +156,41 @@ def main():
                                                                     grd_class = input("Enter grade class you would like to transfer student in: ")
                                                                     try:
                                                                         if grd_class not in grd.extract_grade_classes():
-                                                                            raise OptionExeption
+                                                                            raise OptionException
                                                                         elif grd_class == student.grade_class:
-                                                                            raise TransferStudentToGradeClassExeption
+                                                                            raise TransferStudentToGradeClassException
                                                                         else:
                                                                             for grd_classs in grd.grade_classes:
                                                                                 if grd_classs.grade_class_name == grd_class:
                                                                                     for grd_classss in grd.grade_classes:
                                                                                         if student.grade_class == grd_classss.grade_class_name:
                                                                                             grd_classss.transfer_student(student=student, grade_class=grd_classs)
-                                                                    except OptionExeption as e:
+                                                                    except OptionException as e:
                                                                         print(e)
-                                                                    except TransferStudentToGradeClassExeption as tstgce:
+                                                                    except TransferStudentToGradeClassException as tstgce:
                                                                         print(tstgce)
-                                            except StudentNotInSchoolExeption as snise:
+                                            except StudentNotInSchoolException as snise:
                                                 print(snise)
                                         elif option_1 == "exit":
                                             break
                                         else:
-                                            raise OptionExeption
-                                    except OptionExeption as e:
+                                            raise OptionException
+                                    except OptionException as e:
                                         print(e)
-                except SchoolNotInSystemExeption as snise:
+                except SchoolNotInSystemException as snise:
                     print(snise)
             elif option == "teacher":
                 school_id = input("Enter your working schools id:  ")
                 teacher_id = input("Enter teacher id: ")
                 try:
                     if school_id not in schools_ids:
-                        raise SchoolNotInSystemExeption
+                        raise SchoolNotInSystemException
                     else:
                         for school in schools:
                             if school_id == school.get_school_id():
                                 try:
                                     if teacher_id not in (school.get_teachers_id() + school.get_elementary_teachers_id()):
-                                        raise TeacherNotInSchoolExeption
+                                        raise TeacherNotInSchoolException
                                     else:
                                         for teacher in (school.get_teachers() + school.get_elementary_teachers()):
                                             if teacher_id == teacher.get_id():
@@ -211,14 +211,14 @@ def main():
                                                                         if grade_class.is_teacher_elder_in_grade_class(teacher_id=teacher.get_id()):
                                                                             grade_class.show_grade_class_status()
                                                             else:
-                                                                raise TeacherIsNotElderExeption
-                                                        except TeacherIsNotElderExeption as tinee:
+                                                                raise TeacherIsNotElderException
+                                                        except TeacherIsNotElderException as tinee:
                                                             print(tinee)
                                                     elif option_2 == "b":
                                                         student_id = input("Enter students id: ")
                                                         try:
                                                             if student_id not in school.get_students_id():
-                                                                raise StudentNotInSchoolExeption
+                                                                raise StudentNotInSchoolException
                                                             else:
                                                                 grade_for_sub = int(input("Enter grade: "))
                                                                 try:
@@ -235,50 +235,50 @@ def main():
                                                                                                             subject = input("Enter subject you want to grade (math, serbian, english, physical, world around us, nature and society, music, art): ")
                                                                                                             try:
                                                                                                                 if subject not in school.extract_schools_subjects():
-                                                                                                                    raise NoSuchSubjectExeption
+                                                                                                                    raise NoSuchSubjectException
                                                                                                                 else:
                                                                                                                     try:
                                                                                                                         if subject not in teacher.extract_subject_names():
-                                                                                                                            raise IsNotTeachersSubjectExeption
+                                                                                                                            raise IsNotTeachersSubjectException
                                                                                                                         else:
                                                                                                                             for sub in teacher.subjects:
                                                                                                                                 if str(sub.name) == subject:
                                                                                                                                     student.subjects.get(subject).append(int(grade_for_sub))
-                                                                                                                    except IsNotTeachersSubjectExeption as intse:
+                                                                                                                    except IsNotTeachersSubjectException as intse:
                                                                                                                         print(intse)
-                                                                                                            except NoSuchSubjectExeption as nsse:
+                                                                                                            except NoSuchSubjectException as nsse:
                                                                                                                 print(nsse)
                                                                                                         else:
-                                                                                                            raise TeacherIsNotElderExeption
-                                                                                                    except TeacherIsNotElderExeption as tinee:
+                                                                                                            raise TeacherIsNotElderException
+                                                                                                    except TeacherIsNotElderException as tinee:
                                                                                                         print(tinee)
                                                                                                 else:
                                                                                                     subject = input("Enter subject you want to grade (math, serbian, english, physical, music, art, history, biology, geography, physics, technology, computer science, chemistry): ")
                                                                                                     try:
                                                                                                         if subject not in school.extract_schools_subjects():
-                                                                                                            raise NoSuchSubjectExeption
+                                                                                                            raise NoSuchSubjectException
                                                                                                         else:
                                                                                                             try:
                                                                                                                 for sub in teacher.subjects:
                                                                                                                     if sub.name == subject:
                                                                                                                         student.subjects.get(subject).append(int(grade_for_sub))
                                                                                                                 else:
-                                                                                                                    raise IsNotTeachersSubjectExeption
-                                                                                                            except IsNotTeachersSubjectExeption as e:
+                                                                                                                    raise IsNotTeachersSubjectException
+                                                                                                            except IsNotTeachersSubjectException as e:
                                                                                                                 print(e)
-                                                                                                    except NoSuchSubjectExeption as nsse:
+                                                                                                    except NoSuchSubjectException as nsse:
                                                                                                         print(nsse)
                                                                     else:
-                                                                        raise GradeOutOfRangeExeption
-                                                                except GradeOutOfRangeExeption as e:
+                                                                        raise GradeOutOfRangeException
+                                                                except GradeOutOfRangeException as e:
                                                                     print(e)
-                                                        except StudentNotInSchoolExeption as e:
+                                                        except StudentNotInSchoolException as e:
                                                             print(e)
                                                     elif option_2 == "c":
                                                         student_id = input("Enter students id: ")
                                                         try:
                                                             if student_id not in school.get_students_id():
-                                                                raise StudentNotInSchoolExeption
+                                                                raise StudentNotInSchoolException
                                                             else:
                                                                 for student in school.get_students():
                                                                     if student.id == student_id:
@@ -293,20 +293,20 @@ def main():
                                                                                                         student.get_final_grade_for_subject(subject=subject)
                                                                                                         print(f"Final grade for subject {subject} is {student.get_final_grade_for_subject(subject=subject)}")
                                                                                                 else:
-                                                                                                    raise TeacherIsNotElderExeption
-                                                                                            except TeacherIsNotElderExeption as tinee:
+                                                                                                    raise TeacherIsNotElderException
+                                                                                            except TeacherIsNotElderException as tinee:
                                                                                                 print(tinee)
                                                                                         else:
                                                                                             student.get_final_grade_for_subject(subject=teacher.subjects[0].name)
                                                                                             print(f"Final grade for subject {teacher.subjects[0].name} is {student.get_final_grade_for_subject(subject=teacher.subjects[0].name)}")
 
-                                                        except StudentNotInSchoolExeption as snise:
+                                                        except StudentNotInSchoolException as snise:
                                                             print(snise)
                                                     elif option_2 == "d":
                                                         student_id = input("Enter students id: ")
                                                         try:
                                                             if student_id not in school_ck.get_students_id():
-                                                                raise StudentNotInSchoolExeption
+                                                                raise StudentNotInSchoolException
                                                             else:
                                                                 for student in school_ck.get_students():
                                                                     if student.id == student_id:
@@ -325,35 +325,35 @@ def main():
                                                                                                         student.add_unexcused_absence()
                                                                                                         print(f"You added unexcused absence to student {student.name} {student.surname}, unexcused absence current number is {student.unexcused_absences}")
                                                                                                     else:
-                                                                                                        raise OptionExeption
-                                                                                                except OptionExeption as e:
+                                                                                                        raise OptionException
+                                                                                                except OptionException as e:
                                                                                                     print(e)
                                                                                             else:
-                                                                                                raise TeacherIsNotElderExeption
-                                                                                        except TeacherIsNotElderExeption as tinee:
+                                                                                                raise TeacherIsNotElderException
+                                                                                        except TeacherIsNotElderException as tinee:
                                                                                             print(tinee)
-                                                        except StudentNotInSchoolExeption as snise:
+                                                        except StudentNotInSchoolException as snise:
                                                             print(snise)
                                                     elif option_2 == "e":
                                                         print(teacher.show_person_info())
                                                     elif option_2 == "exit":
                                                         break
-                                except TeacherNotInSchoolExeption as tnise:
+                                except TeacherNotInSchoolException as tnise:
                                     print(tnise)
-                except SchoolNotInSystemExeption as snise:
+                except SchoolNotInSystemException as snise:
                     print(snise)
             elif option == "student":
                 school_id = input("Enter school id: ")
                 student_id = input("Enter student id: ")
                 try:
                     if school_id not in schools_ids:
-                        raise SchoolNotInSystemExeption
+                        raise SchoolNotInSystemException
                     else:
                         for school in schools:
                             if school.get_school_id() == school_id:
                                 try:
                                     if student_id not in school.get_students_id():
-                                        raise StudentNotInSchoolExeption
+                                        raise StudentNotInSchoolException
                                     else:
                                         for stud in school.get_students():
                                             if stud.id == student_id:
@@ -371,12 +371,12 @@ def main():
                                                         elif option_3 == "exit":
                                                             break
                                                         else:
-                                                            raise OptionExeption
-                                                    except OptionExeption as e:
+                                                            raise OptionException
+                                                    except OptionException as e:
                                                         print(e)
-                                except StudentNotInSchoolExeption as snise:
+                                except StudentNotInSchoolException as snise:
                                     print(snise)
-                except SchoolNotInSystemExeption as snise:
+                except SchoolNotInSystemException as snise:
                     print(snise)
             elif option == "exit":
                 print("Thank you for using our e-gradebook!")
@@ -435,8 +435,8 @@ def main():
                                                 dir_4=f"{student.name}_{student.surname}")
                 break
             else:
-                raise OptionExeption
-        except OptionExeption as e:
+                raise OptionException
+        except OptionException as e:
             print(e)
 
 

@@ -1,9 +1,9 @@
-from projekat.grade_class import Grade
-from projekat.grade_class_class import GradeClass
-from projekat.school_class import School
-from projekat.student_class import Student
-from projekat.subjects_class import Subject
-from projekat.teacher_class import Teacher
+from grade import Grade
+from grade_class import GradeClass
+from school import School
+from student import Student
+from subjects import Subject
+from teacher import Teacher
 
 math_sub = Subject(name="math")
 serbian_sub = Subject(name="serbian")

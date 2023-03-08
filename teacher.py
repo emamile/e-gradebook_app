@@ -1,6 +1,6 @@
 import typing as t
-from subjects_class import *
-from projekat.person_class import *
+from subjects import *
+from person import *
 
 
 class Teacher(Person):

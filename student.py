@@ -1,4 +1,4 @@
-from projekat.person_class import *
+from person import *
 
 
 class Student(Person):

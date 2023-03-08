@@ -1,10 +1,10 @@
 import typing as t
 import random
 
-from projekat.exeptions_class import *
-from projekat.grade_class import Grade
-from projekat.student_class import Student
-from projekat.teacher_class import Teacher
+from exeptions import *
+from grade import Grade
+from student import Student
+from teacher import Teacher
 
 
 class School:

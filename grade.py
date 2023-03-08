@@ -1,8 +1,8 @@
 import typing as t
 
-from projekat.grade_class_class import GradeClass
-from projekat.student_class import Student
-from projekat.subjects_class import Subject
+from grade_class import GradeClass
+from student import Student
+from subjects import Subject
 
 
 class Grade:
